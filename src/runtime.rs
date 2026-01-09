@@ -190,9 +190,10 @@ fn display_tool_details(tool_name: &str, input: &Value) -> Result<()> {
             println!("]");
             if let Some(todos) = input.get("todos").and_then(|v| v.as_array()) {
                 for todo in todos {
-                    if let Some(content) = todo.get("content").and_then(|v| v.as_str())
-                        && let Some(status) = todo.get("status").and_then(|v| v.as_str())
-                    {
+                    if let (Some(content), Some(status)) = (
+                        todo.get("content").and_then(|v| v.as_str()),
+                        todo.get("status").and_then(|v| v.as_str()),
+                    ) {
                         let marker = match status {
                             "completed" => "✓",
                             "in_progress" => "→",
